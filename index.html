@@ -15,7 +15,6 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'), auto;
       overflow: hidden;
     }
 
@@ -154,12 +153,11 @@
     }
 
     @keyframes bounce {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.2); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
 
-    /* Twinkling lights */
     #loveScreen::after {
       content: "";
       position: absolute;
@@ -177,7 +175,6 @@
       100% { opacity: 0.3; }
     }
 
-    /* Falling Petals */
     .petal {
       position: fixed;
       top: -50px;
@@ -218,8 +215,8 @@
 
   <div class="login-card">
     <div class="login-title">Welcome to Login Page</div>
-    <input type="text" id="userId" placeholder="Enter User ID" autocorrect="off" autocapitalize="off" />
-    <input type="password" id="password" placeholder="Enter Password" autocorrect="off" autocapitalize="off" />
+    <input type="text" id="userId" placeholder="Enter User ID" />
+    <input type="password" id="password" placeholder="Enter Password" />
 
     <div class="captcha-box">
       <div class="captcha-text" id="captchaCode">AB12X</div>
@@ -231,20 +228,24 @@
     <p id="errorMsg" style="color: red;"></p>
   </div>
 
-  <div id="loveScreen" class="love-container">
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/K-8A6B1bJEs?autoplay=1&loop=1&playlist=K-8A6B1bJEs" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+  <div id="loveScreen">
     <div class="love-text">I ❤️ Love ❤️ You</div>
     <div class="emoji">🤗💖🤗</div>
   </div>
 
-  <!-- Background music player -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <!-- YouTube song: Tu Hi Tu Har Jagah -->
+  <iframe
+    id="bgIframe"
+    width="0" height="0"
+    data-src="https://www.youtube.com/embed/VqUj6RJeMzI?autoplay=1&loop=1&playlist=VqUj6RJeMzI"
+    src="https://www.youtube.com/embed/VqUj6RJeMzI?autoplay=1&loop=1&playlist=VqUj6RJeMzI"
+    frameborder="0"
+    allow="autoplay"
+    allowfullscreen>
+  </iframe>
 
-  <!-- Music control button -->
-  <button id="musicToggle" title="Toggle Music">🔊</button>
+  <!-- Play/Pause Button -->
+  <button id="musicToggle" title="Play/Pause Music">🔊</button>
 
   <script>
     const userDatabase = {
@@ -257,7 +258,7 @@
       for (let i = 0; i < 5; i++) {
         code += chars.charAt(Math.floor(Math.random() * chars.length));
       }
-      return code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return code;
     }
 
     function refreshCaptcha() {
@@ -299,40 +300,25 @@
         heart.style.fontSize = `${Math.random() * 20 + 20}px`;
         loveScreen.appendChild(heart);
       }
-
-      // Optional welcome text
-      setTimeout(() => {
-        const text = document.createElement("div");
-        text.className = "love-text";
-        text.innerText = "Welcome, my Love!";
-        loveScreen.appendChild(text);
-      }, 3000);
     }
 
-    // Play/pause music toggle
     const musicBtn = document.getElementById("musicToggle");
-    const music = document.getElementById("bgMusic");
+    const iframe = document.getElementById("bgIframe");
+    let playing = true;
 
     musicBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        musicBtn.innerText = "🔊";
-      } else {
-        music.pause();
+      if (playing) {
+        iframe.src = "";
         musicBtn.innerText = "🔇";
+      } else {
+        iframe.src = iframe.dataset.src;
+        musicBtn.innerText = "🔊";
       }
+      playing = !playing;
       musicBtn.classList.add("bounce");
       setTimeout(() => musicBtn.classList.remove("bounce"), 500);
     });
 
-    // Enter key support
-    document.addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        handleLogin();
-      }
-    });
-
-    // Generate falling petals
     function createPetal() {
       const petal = document.createElement("div");
       petal.className = "petal";
