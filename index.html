@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Romantic Login Page</title>
+  <title>Romantic Login</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -23,7 +23,6 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 400px;
-      animation: slideIn 0.6s ease;
     }
 
     .login-title {
@@ -103,11 +102,6 @@
       100% { transform: translateY(-600px); opacity: 0; }
     }
 
-    @keyframes slideIn {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
     @media (max-width: 500px) {
       .login-card {
         padding: 20px;
@@ -147,16 +141,8 @@
   </div>
 
   <script>
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
     const userDatabase = {
-      "user101": "ec7cf5f3b005aeb9f0191ec978ec0e7f94d5a9d1cfc037e35662246f5cb09cc6", // pass1234
-      "user202": "e255a95a0bfa88419c9ec184e6c4f409b03dbe0cbd225e3c7d451164a70934c4"  // secureEPF
+      "shekhar": "iloveyou"
     };
 
     function generateCaptcha() {
@@ -172,7 +158,7 @@
       document.getElementById("captchaCode").innerText = generateCaptcha();
     }
 
-    async function handleLogin() {
+    function handleLogin() {
       const userId = document.getElementById("userId").value.trim().toLowerCase();
       const password = document.getElementById("password").value.trim();
       const captchaInput = document.getElementById("captchaInput").value.trim();
@@ -185,9 +171,7 @@
         return;
       }
 
-      const hashedInput = await sha256(password);
-
-      if (userDatabase[userId] && userDatabase[userId] === hashedInput) {
+      if (userDatabase[userId] && userDatabase[userId] === password) {
         errorMsg.innerText = "";
         showLoveScreen();
       } else {
