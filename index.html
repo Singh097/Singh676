@@ -1,163 +1,218 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sidebar Demo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        .sidebar {
-            width: 320px;
-            background-color: #fdfdfd;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-card {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .profile-pic {
-            width: 50px;
-            height: 50px;
-            background-color: #ccc;
-            border-radius: 50%;
-            margin-right: 15px;
-            background-image: url('https://via.placeholder.com/50');
-            background-size: cover;
-        }
-        .profile-info {
-            font-size: 14px;
-        }
-        .search-box {
-            margin-bottom: 15px;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-        .menu-section {
-            margin-bottom: 20px;
-        }
-        .menu-title {
-            cursor: pointer;
-            font-weight: bold;
-            padding: 12px 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            color: white;
-        }
-        .menu-items {
-            margin-top: 10px;
-            margin-left: 10px;
-            display: none;
-        }
-        .menu-items li {
-            margin: 6px 0;
-            list-style: none;
-            padding: 8px 12px;
-            background-color: #fff;
-            border-radius: 6px;
-            border: 1px solid #e0e0e0;
-            transition: background-color 0.3s, transform 0.2s;
-            cursor: pointer;
-        }
-        .menu-items li:hover {
-            background-color: #f0f8ff;
-            transform: translateX(5px);
-        }
-        .submenu {
-            display: none;
-            margin-left: 20px;
-            margin-top: 5px;
-        }
-        .submenu li {
-            font-size: 14px;
-            background-color: #f9f9f9;
-        }
-        .menu-items li i {
-            margin-right: 8px;
-        }
-        .tms-title {
-            background-color: #4CAF50;
-        }
-        .work-title {
-            background-color: #2196F3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Romantic Login Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      animation: slideIn 0.6s ease;
+    }
+
+    .login-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #0d6efd;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .captcha-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .captcha-text {
+      font-family: monospace;
+      font-size: 20px;
+      color: #dc3545;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 12px;
+      width: 100px;
+      text-align: center;
+    }
+
+    #loveScreen {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(to right, #ffddee, #ffb3c6);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .love-text {
+      font-size: 44px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 60px;
+      margin-top: 15px;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: 0;
+      font-size: 24px;
+      color: #ff4d6d;
+      animation: float 5s linear infinite;
+      z-index: 999;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-600px); opacity: 0; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 500px) {
+      .login-card {
+        padding: 20px;
+      }
+
+      .love-text {
+        font-size: 30px;
+      }
+
+      .emoji {
+        font-size: 40px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="profile-card">
-            <div class="profile-pic"></div>
-            <div class="profile-info">
-                <strong>Chandra Singh</strong><br>
-                <small>chandra.singh@example.com</small>
-            </div>
-        </div>
 
-        <div class="search-box">
-            <input type="text" placeholder="Search menu...">
-        </div>
+  <div class="login-card">
+    <div class="login-title">Welcome to Login Page</div>
+    <input type="text" id="userId" placeholder="Enter User ID" />
+    <input type="password" id="password" placeholder="Enter Password" />
 
-        <div class="menu-section">
-            <div class="menu-title tms-title" onclick="toggleMenu('tms-menu')">TMS</div>
-            <ul class="menu-items" id="tms-menu">
-                <li><i class="fas fa-tasks"></i> Task List</li>
-                <li><i class="fas fa-user-check"></i> My Task</li>
-                <li><i class="fas fa-clipboard-check"></i> Task Accepted</li>
-                <li><i class="fas fa-times-circle"></i> Rejected Tasks</li>
-                <li><i class="fas fa-user-plus"></i> Task Assign By Me</li>
-                <li><i class="fas fa-user-clock"></i> Task Requested</li>
-                <li><i class="fas fa-thumbtack"></i> Main Task</li>
-                <li><i class="fas fa-sync-alt"></i> Recurring Main Task</li>
-                <li><i class="fas fa-calendar-times"></i> Due Date Past</li>
-                <li><i class="fas fa-hourglass-half"></i> Pending Task</li>
-                <li><i class="fas fa-check-circle"></i> Completed Task</li>
-                <li><i class="fas fa-list"></i> Overall Task</li>
-                <li><i class="fas fa-trash"></i> Delete Task</li>
-                <li><i class="fas fa-clipboard-list"></i> Activity</li>
-            </ul>
-        </div>
-
-        <div class="menu-section">
-            <div class="menu-title work-title" onclick="toggleMenu('work-menu')">Work Report</div>
-            <ul class="menu-items" id="work-menu">
-                <li onclick="toggleSubMenu('hr-submenu')"><i class="fas fa-users"></i> HR Department</li>
-                <ul class="submenu" id="hr-submenu">
-                    <li><i class="fas fa-money-check-alt"></i> HR - Payroll</li>
-                    <li><i class="fas fa-user-tie"></i> HR - Recruitment</li>
-                    <li><i class="fas fa-user-alt"></i> HR - Generalist</li>
-                    <li><i class="fas fa-users"></i> HR - Manager</li>
-                </ul>
-                <li><i class="fas fa-briefcase"></i> Management Department</li>
-                <li><i class="fas fa-handshake"></i> BD Department</li>
-                <li><i class="fas fa-vial"></i> IV Department</li>
-                <li><i class="fas fa-vials"></i> NIV Department</li>
-                <li><i class="fas fa-chalkboard-teacher"></i> FE Department</li>
-                <li><i class="fas fa-graduation-cap"></i> Coaching Department</li>
-                <li><i class="fas fa-dollar-sign"></i> Finance Department</li>
-                <li><i class="fas fa-check-double"></i> QC Department</li>
-            </ul>
-        </div>
+    <div class="captcha-box">
+      <div class="captcha-text" id="captchaCode">AB12X</div>
+      <button style="width: auto; margin-left: 10px;" onclick="refreshCaptcha()">🔄</button>
     </div>
 
-    <script>
-        function toggleMenu(menuId) {
-            var menu = document.getElementById(menuId);
-            menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
-        }
+    <input type="text" id="captchaInput" placeholder="Enter Captcha" />
+    <button onclick="handleLogin()">Sign In ❤️</button>
+    <p id="errorMsg" style="color: red;"></p>
+  </div>
 
-        function toggleSubMenu(submenuId) {
-            event.stopPropagation();
-            var submenu = document.getElementById(submenuId);
-            submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
-        }
-    </script>
+  <div id="loveScreen" class="love-container">
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/K-8A6B1bJEs?autoplay=1&loop=1&playlist=K-8A6B1bJEs" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+    <div class="love-text">I ❤️ Love ❤️ You</div>
+    <div class="emoji">🤗💖🤗</div>
+  </div>
+
+  <script>
+    // SHA-256 hashing
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // Simulated user database (hashed passwords)
+    const userDatabase = {
+      "user101": "ec7cf5f3b005aeb9f0191ec978ec0e7f94d5a9d1cfc037e35662246f5cb09cc6",  // "pass1234"
+      "user202": "e255a95a0bfa88419c9ec184e6c4f409b03dbe0cbd225e3c7d451164a70934c4"   // "secureEPF"
+    };
+
+    function generateCaptcha() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let code = '';
+      for (let i = 0; i < 5; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
+    function refreshCaptcha() {
+      document.getElementById("captchaCode").innerText = generateCaptcha();
+    }
+
+    async function handleLogin() {
+      const userId = document.getElementById("userId").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const captchaInput = document.getElementById("captchaInput").value.trim();
+      const captchaCode = document.getElementById("captchaCode").innerText.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (captchaInput !== captchaCode) {
+        errorMsg.innerText = "❌ Incorrect Captcha!";
+        refreshCaptcha();
+        return;
+      }
+
+      const hashedInput = await sha256(password);
+
+      if (userDatabase[userId] && userDatabase[userId] === hashedInput) {
+        errorMsg.innerText = "";
+        showLoveScreen();
+      } else {
+        errorMsg.innerText = "❌ Invalid User ID or Password!";
+      }
+    }
+
+    function showLoveScreen() {
+      document.querySelector(".login-card").style.display = "none";
+      const loveScreen = document.getElementById("loveScreen");
+      loveScreen.style.display = "flex";
+
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 90 + "%";
+        heart.style.animationDelay = Math.random() * 5 + "s";
+        loveScreen.appendChild(heart);
+      }
+    }
+
+    refreshCaptcha();
+  </script>
 </body>
 </html>
