@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .sidebar {
+            width: 320px;
+            background-color: #fdfdfd;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-image: url('https://via.placeholder.com/50');
+            background-size: cover;
+        }
+        .profile-info {
+            font-size: 14px;
+        }
+        .search-box {
+            margin-bottom: 15px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        .menu-title {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: white;
+        }
+        .menu-items {
+            margin-top: 10px;
+            margin-left: 10px;
+            display: none;
+        }
+        .menu-items li {
+            margin: 6px 0;
+            list-style: none;
+            padding: 8px 12px;
+            background-color: #fff;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            transition: background-color 0.3s, transform 0.2s;
+            cursor: pointer;
+        }
+        .menu-items li:hover {
+            background-color: #f0f8ff;
+            transform: translateX(5px);
+        }
+        .submenu {
+            display: none;
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+        .submenu li {
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+        .menu-items li i {
+            margin-right: 8px;
+        }
+        .tms-title {
+            background-color: #4CAF50;
+        }
+        .work-title {
+            background-color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile-card">
+            <div class="profile-pic"></div>
+            <div class="profile-info">
+                <strong>Chandra Singh</strong><br>
+                <small>chandra.singh@example.com</small>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Search menu...">
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title tms-title" onclick="toggleMenu('tms-menu')">TMS</div>
+            <ul class="menu-items" id="tms-menu">
+                <li><i class="fas fa-tasks"></i> Task List</li>
+                <li><i class="fas fa-user-check"></i> My Task</li>
+                <li><i class="fas fa-clipboard-check"></i> Task Accepted</li>
+                <li><i class="fas fa-times-circle"></i> Rejected Tasks</li>
+                <li><i class="fas fa-user-plus"></i> Task Assign By Me</li>
+                <li><i class="fas fa-user-clock"></i> Task Requested</li>
+                <li><i class="fas fa-thumbtack"></i> Main Task</li>
+                <li><i class="fas fa-sync-alt"></i> Recurring Main Task</li>
+                <li><i class="fas fa-calendar-times"></i> Due Date Past</li>
+                <li><i class="fas fa-hourglass-half"></i> Pending Task</li>
+                <li><i class="fas fa-check-circle"></i> Completed Task</li>
+                <li><i class="fas fa-list"></i> Overall Task</li>
+                <li><i class="fas fa-trash"></i> Delete Task</li>
+                <li><i class="fas fa-clipboard-list"></i> Activity</li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-title work-title" onclick="toggleMenu('work-menu')">Work Report</div>
+            <ul class="menu-items" id="work-menu">
+                <li onclick="toggleSubMenu('hr-submenu')"><i class="fas fa-users"></i> HR Department</li>
+                <ul class="submenu" id="hr-submenu">
+                    <li><i class="fas fa-money-check-alt"></i> HR - Payroll</li>
+                    <li><i class="fas fa-user-tie"></i> HR - Recruitment</li>
+                    <li><i class="fas fa-user-alt"></i> HR - Generalist</li>
+                    <li><i class="fas fa-users"></i> HR - Manager</li>
+                </ul>
+                <li><i class="fas fa-briefcase"></i> Management Department</li>
+                <li><i class="fas fa-handshake"></i> BD Department</li>
+                <li><i class="fas fa-vial"></i> IV Department</li>
+                <li><i class="fas fa-vials"></i> NIV Department</li>
+                <li><i class="fas fa-chalkboard-teacher"></i> FE Department</li>
+                <li><i class="fas fa-graduation-cap"></i> Coaching Department</li>
+                <li><i class="fas fa-dollar-sign"></i> Finance Department</li>
+                <li><i class="fas fa-check-double"></i> QC Department</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(menuId) {
+            var menu = document.getElementById(menuId);
+            menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+        }
+
+        function toggleSubMenu(submenuId) {
+            event.stopPropagation();
+            var submenu = document.getElementById(submenuId);
+            submenu.style.display = (submenu.style.display === "none" || submenu.style.display === "") ? "block" : "none";
+        }
+    </script>
+</body>
+</html>
