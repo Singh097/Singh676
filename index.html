@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Romantic Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: #f5f7fa;
       margin: 0;
       padding: 20px;
@@ -14,6 +15,8 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      cursor: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'), auto;
+      overflow: hidden;
     }
 
     .login-card {
@@ -23,6 +26,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 400px;
+      z-index: 2;
     }
 
     .login-title {
@@ -58,13 +62,20 @@
       padding: 6px 12px;
       width: 100px;
       text-align: center;
+      background: #fefefe;
+    }
+
+    .refresh-btn {
+      width: auto;
+      margin-left: 10px;
     }
 
     #loveScreen {
       display: none;
       height: 100vh;
       width: 100vw;
-      background: linear-gradient(to right, #ffddee, #ffb3c6);
+      background: linear-gradient(-45deg, #ffddee, #ffb3c6, #ffc0cb, #ff9aa2);
+      background-size: 400% 400%;
       position: fixed;
       top: 0;
       left: 0;
@@ -73,19 +84,35 @@
       align-items: center;
       flex-direction: column;
       overflow: hidden;
+      animation: gradient 15s ease infinite;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #loveScreen.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .love-text {
       font-size: 44px;
+      font-family: 'Great Vibes', cursive;
       font-weight: bold;
       color: white;
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
       text-align: center;
+      margin-bottom: 10px;
     }
 
     .emoji {
       font-size: 60px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .heart {
@@ -100,6 +127,76 @@
     @keyframes float {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-600px); opacity: 0; }
+    }
+
+    #musicToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      font-size: 28px;
+      background: #fff;
+      color: #ff4d6d;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      padding: 12px;
+      transition: transform 0.2s ease, background 0.3s;
+    }
+
+    #musicToggle:hover {
+      background: #ffe6ea;
+    }
+
+    #musicToggle.bounce {
+      animation: bounce 0.5s;
+    }
+
+    @keyframes bounce {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Twinkling lights */
+    #loveScreen::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(white 1px, transparent 1px) center/20px 20px repeat;
+      opacity: 0.1;
+      z-index: 0;
+      animation: twinkle 3s infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.1; }
+      100% { opacity: 0.3; }
+    }
+
+    /* Falling Petals */
+    .petal {
+      position: fixed;
+      top: -50px;
+      font-size: 20px;
+      color: #ffb6c1;
+      animation: fall linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     @media (max-width: 500px) {
@@ -126,7 +223,7 @@
 
     <div class="captcha-box">
       <div class="captcha-text" id="captchaCode">AB12X</div>
-      <button style="width: auto; margin-left: 10px;" onclick="refreshCaptcha()">🔄</button>
+      <button class="refresh-btn" onclick="refreshCaptcha()">🔄</button>
     </div>
 
     <input type="text" id="captchaInput" placeholder="Enter Captcha" />
@@ -140,6 +237,15 @@
     <div class="emoji">🤗💖🤗</div>
   </div>
 
+  <!-- Background music player -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Music control button -->
+  <button id="musicToggle" title="Toggle Music">🔊</button>
+
   <script>
     const userDatabase = {
       "anju": "singh097"
@@ -151,7 +257,7 @@
       for (let i = 0; i < 5; i++) {
         code += chars.charAt(Math.floor(Math.random() * chars.length));
       }
-      return code;
+      return code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     function refreshCaptcha() {
@@ -182,7 +288,7 @@
     function showLoveScreen() {
       document.querySelector(".login-card").style.display = "none";
       const loveScreen = document.getElementById("loveScreen");
-      loveScreen.style.display = "flex";
+      loveScreen.classList.add("show");
 
       for (let i = 0; i < 30; i++) {
         const heart = document.createElement("div");
@@ -190,10 +296,55 @@
         heart.innerText = "❤️";
         heart.style.left = Math.random() * 90 + "%";
         heart.style.animationDelay = Math.random() * 5 + "s";
+        heart.style.fontSize = `${Math.random() * 20 + 20}px`;
         loveScreen.appendChild(heart);
       }
+
+      // Optional welcome text
+      setTimeout(() => {
+        const text = document.createElement("div");
+        text.className = "love-text";
+        text.innerText = "Welcome, my Love!";
+        loveScreen.appendChild(text);
+      }, 3000);
     }
 
+    // Play/pause music toggle
+    const musicBtn = document.getElementById("musicToggle");
+    const music = document.getElementById("bgMusic");
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerText = "🔊";
+      } else {
+        music.pause();
+        musicBtn.innerText = "🔇";
+      }
+      musicBtn.classList.add("bounce");
+      setTimeout(() => musicBtn.classList.remove("bounce"), 500);
+    });
+
+    // Enter key support
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        handleLogin();
+      }
+    });
+
+    // Generate falling petals
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.className = "petal";
+      petal.innerText = "🌸";
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = (Math.random() * 5 + 5) + "s";
+      petal.style.fontSize = (Math.random() * 10 + 14) + "px";
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 10000);
+    }
+
+    setInterval(createPetal, 400);
     refreshCaptcha();
   </script>
 </body>
