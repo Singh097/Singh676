@@ -1,4 +1,4 @@
-# 💖 Romantic Login Page with Captcha & Music
+#Login Page with Captcha & Music
 
 A fun, animated **Login Page** built with HTML, CSS & JavaScript — featuring:
 
@@ -41,8 +41,7 @@ A fun, animated **Login Page** built with HTML, CSS & JavaScript — featuring:
 
 | Username  | Password    |
 |-----------|-------------|
-| `user101` | `pass1234`  |
-| `user202` | `secureEPF` |
+| `anju` | `singh097`  |
 
 (These are hashed in the browser using SHA-256 before comparing.)
 
