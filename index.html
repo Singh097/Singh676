@@ -196,6 +196,31 @@
       }
     }
 
+    .love-meter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .love-meter progress {
+      width: 80%;
+      height: 25px;
+      border-radius: 20px;
+      overflow: hidden;
+      appearance: none;
+    }
+
+    .love-meter progress::-webkit-progress-bar {
+      background-color: #ffe6f0;
+      border-radius: 20px;
+    }
+
+    .love-meter progress::-webkit-progress-value {
+      background: linear-gradient(to right, #ff4d6d, #ff85a2, #ffb3c6);
+      border-radius: 20px;
+    }
+
     @media (max-width: 500px) {
       .login-card {
         padding: 20px;
@@ -230,6 +255,13 @@
 
   <div id="loveScreen">
     <div class="love-text" id="dateTimeDisplay"></div>
+
+    <!-- ❤️ Love Meter -->
+    <div class="love-meter">
+      <label class="love-text">Love Meter 💘</label>
+      <progress id="loveProgress" value="0" max="100"></progress>
+    </div>
+
     <div class="love-text">I ❤️ Love ❤️ You</div>
     <div class="emoji">🤗💖🤗</div>
     <div class="love-text">Anju my love Tere bina adhura hoon main,<br>
@@ -295,6 +327,8 @@
       const loveScreen = document.getElementById("loveScreen");
       loveScreen.classList.add("show");
 
+      animateLoveMeter();
+
       for (let i = 0; i < 30; i++) {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -306,22 +340,18 @@
       }
     }
 
-    const musicBtn = document.getElementById("musicToggle");
-    const iframe = document.getElementById("bgIframe");
-    let playing = true;
-
-    musicBtn.addEventListener("click", () => {
-      if (playing) {
-        iframe.src = "";
-        musicBtn.innerText = "🔇";
-      } else {
-        iframe.src = iframe.dataset.src;
-        musicBtn.innerText = "🔊";
-      }
-      playing = !playing;
-      musicBtn.classList.add("bounce");
-      setTimeout(() => musicBtn.classList.remove("bounce"), 500);
-    });
+    function animateLoveMeter() {
+      const progress = document.getElementById("loveProgress");
+      let value = 0;
+      const interval = setInterval(() => {
+        if (value >= 100) {
+          clearInterval(interval);
+        } else {
+          value += 1;
+          progress.value = value;
+        }
+      }, 20);
+    }
 
     function createPetal() {
       const petal = document.createElement("div");
@@ -352,9 +382,26 @@
       }
     }
 
+    const musicBtn = document.getElementById("musicToggle");
+    const iframe = document.getElementById("bgIframe");
+    let playing = true;
+
+    musicBtn.addEventListener("click", () => {
+      if (playing) {
+        iframe.src = "";
+        musicBtn.innerText = "🔇";
+      } else {
+        iframe.src = iframe.dataset.src;
+        musicBtn.innerText = "🔊";
+      }
+      playing = !playing;
+      musicBtn.classList.add("bounce");
+      setTimeout(() => musicBtn.classList.remove("bounce"), 500);
+    });
+
     setInterval(updateDateTime, 1000);
-    updateDateTime();
     setInterval(createPetal, 400);
+    updateDateTime();
     refreshCaptcha();
   </script>
 </body>
