@@ -229,16 +229,16 @@
   </div>
 
   <div id="loveScreen">
-    <div class="love-text">12 July 2025</div>
+    <div class="love-text" id="dateTimeDisplay"></div>
     <div class="love-text">I ❤️ Love ❤️ You</div>
     <div class="emoji">🤗💖🤗</div>
-    <div class="love-text"> Anju my love Tere bina adhura hoon main,
-Tere saath hi poora hoon main,
-Tu chahe paas ho ya door,
-Har pal bas tera hi hoon main.</div>
+    <div class="love-text">Anju my love Tere bina adhura hoon main,<br>
+      Tere saath hi poora hoon main,<br>
+      Tu chahe paas ho ya door,<br>
+      Har pal bas tera hi hoon main.
+    </div>
   </div>
 
-  <!-- YouTube song: Tu Hi Tu Har Jagah -->
   <iframe
     id="bgIframe"
     width="0" height="0"
@@ -249,7 +249,6 @@ Har pal bas tera hi hoon main.</div>
     allowfullscreen>
   </iframe>
 
-  <!-- Play/Pause Button -->
   <button id="musicToggle" title="Play/Pause Music">🔊</button>
 
   <script>
@@ -335,6 +334,26 @@ Har pal bas tera hi hoon main.</div>
       setTimeout(() => petal.remove(), 10000);
     }
 
+    function updateDateTime() {
+      const now = new Date();
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      const formatted = now.toLocaleString('en-IN', options);
+      const dateTimeElement = document.getElementById("dateTimeDisplay");
+      if (dateTimeElement) {
+        dateTimeElement.innerText = formatted;
+      }
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
     setInterval(createPetal, 400);
     refreshCaptcha();
   </script>
