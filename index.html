@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Romantic Login with Chat</title>
+  <title>Romantic Login with Crazy Love Show</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -74,7 +74,7 @@
       justify-content:center;
       align-items:center;
       flex-direction:column;
-      overflow:hidden;
+      overflow:auto;
       animation:gradient 15s ease infinite;
       opacity:0;
       transition:opacity 1s ease;
@@ -89,134 +89,32 @@
       100% {background-position:0% 50%;}
     }
     .love-text {
-      font-size:44px;
+      font-size:24px;
       font-family:'Great Vibes',cursive;
-      font-weight:bold;
       color:white;
       text-shadow:2px 2px 6px rgba(0,0,0,0.2);
       text-align:center;
-      margin-bottom:10px;
+      margin:10px;
     }
-    .emoji {
-      font-size:60px;
-      margin-top:10px;
+    .love-msg {
+      font-size:18px;
+      font-family:'Poppins', sans-serif;
+      color:#fff;
+      background: rgba(0,0,0,0.2);
+      padding:10px 15px;
+      border-radius:12px;
+      margin:5px auto;
+      max-width:80%;
+      animation: fadeIn 1s ease;
     }
-    .heart {
-      position:fixed;
-      bottom:0;
-      font-size:24px;
-      color:#ff4d6d;
-      animation:float 5s linear infinite;
-      z-index:999;
-    }
-    @keyframes float {
-      0% {transform:translateY(0);opacity:1;}
-      100% {transform:translateY(-600px);opacity:0;}
-    }
-    #musicToggle {
-      position:fixed;
-      top:20px;right:20px;
-      z-index:1001;
-      font-size:28px;
-      background:#fff;
-      color:#ff4d6d;
-      border:none;
-      border-radius:50%;
-      box-shadow:0 4px 10px rgba(0,0,0,0.2);
-      cursor:pointer;
-      padding:12px;
-      transition:transform .2s ease,background .3s;
-    }
-    #musicToggle:hover {background:#ffe6ea;}
-    #musicToggle.bounce {animation:bounce .5s;}
-    @keyframes bounce {
-      0% {transform:scale(1);}
-      50% {transform:scale(1.2);}
-      100% {transform:scale(1);}
-    }
-    #loveScreen::after {
-      content:"";
-      position:absolute;
-      top:0;left:0;width:100%;height:100%;
-      background:radial-gradient(white 1px,transparent 1px) center/20px 20px repeat;
-      opacity:0.1;
-      z-index:0;
-      animation:twinkle 3s infinite alternate;
-      pointer-events:none;
-    }
-    @keyframes twinkle {0% {opacity:0.1;}100%{opacity:0.3;}}
-    .petal {position:fixed;top:-50px;font-size:20px;color:#ffb6c1;animation:fall linear infinite;z-index:1;pointer-events:none;}
-    @keyframes fall {0%{transform:translateY(0) rotate(0);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}
-    .love-meter {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      margin:20px 0;
-    }
-    .love-meter progress {
-      width:80%;
-      height:25px;
-      border-radius:20px;
-      overflow:hidden;
-      appearance:none;
-    }
-    .love-meter progress::-webkit-progress-bar {
-      background-color:#ffe6f0;border-radius:20px;
-    }
-    .love-meter progress::-webkit-progress-value {
-      background:linear-gradient(to right,#ff4d6d,#ff85a2,#ffb3c6);
-      border-radius:20px;
-    }
-    /* Chat Styles */
-    .chat-container {
-      background:#fff0f5;
-      border-radius:16px;
-      max-width:400px;
-      padding:10px;
-      width:90%;
-      margin-top:20px;
-      z-index:2;
-    }
-    .chat-box {
-      height:200px;
-      overflow-y:auto;
-      background:#ffffffc9;
-      border-radius:10px;
-      padding:10px;
-      margin-bottom:10px;
-      font-size:14px;
-      color:#444;
-    }
-    .chat-box .user {text-align:right;color:#ff4d6d;margin:5px 0;}
-    .chat-box .bot {text-align:left;color:#8a2be2;margin:5px 0;}
-    .chat-input {
-      display:flex;
-      gap:10px;
-    }
-    .chat-input input {
-      flex:1;
-      padding:8px;
-      border-radius:10px;
-      border:1px solid #ccc;
-    }
-    .chat-input button {
-      background:#ff4d6d;
-      color:white;
-      border:none;
-      padding:8px 12px;
-      border-radius:10px;
-      cursor:pointer;
-    }
-    @media (max-width:500px) {
-      .login-card {padding:20px;}
-      .love-text {font-size:30px;}
-      .emoji {font-size:40px;}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Login Card -->
   <div class="login-card">
     <div class="login-title">Welcome to Love Chat</div>
     <input type="text" id="userId" placeholder="User ID (e.g. anju)" />
@@ -230,59 +128,9 @@
     <p id="errorMsg" style="color:red;"></p>
   </div>
 
-  <!-- Romantic Screen -->
-  <div id="loveScreen">
-    <div class="love-text" id="dateTimeDisplay"></div>
-    <div class="love-text" id="daysCounter"></div>
-    <div class="love-meter">
-      <label class="love-text">Love Meter 💘</label>
-      <progress id="loveProgress" value="0" max="100"></progress>
-    </div>
-    <div class="love-text">I ❤️ Love ❤️ You</div>
-    <div class="emoji">🤗💖🤗</div>
-    <div class="love-text">
-      Anju my love Tere bina adhura hoon main,<br>
-      Tere saath hi poora hoon main,<br>
-      Tu chahe paas ho ya door,<br>
-      Har pal bas tera hi hoon main.
-    </div>
-
-    <!-- Real-time Chat -->
-    <div class="chat-container">
-      <div class="chat-box" id="chatBox"></div>
-      <div class="chat-input">
-        <input type="text" id="chatMessage" placeholder="Type your message..." />
-        <button onclick="sendMessage()">📨</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Music -->
-  <iframe id="bgIframe" width="0" height="0"
-    data-src="https://www.youtube.com/embed/UH2cPk24LQw?autoplay=1&loop=1&playlist=VqUj6RJeMzI"
-    src="https://www.youtube.com/embed/VqUj6RJeMzI?autoplay=1&loop=1&playlist=VqUj6RJeMzI"
-    frameborder="0" allow="autoplay" allowfullscreen>
-  </iframe>
-  <button id="musicToggle" title="Play/Pause Music">🔊</button>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database-compat.js"></script>
+  <div id="loveScreen"></div>
 
   <script>
-    // Replace with your own Firebase config
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
     const userDatabase = { "anju": "singh097" };
     let currentUser = "";
 
@@ -314,92 +162,99 @@
       document.querySelector(".login-card").style.display = "none";
       const loveScreen = document.getElementById("loveScreen");
       loveScreen.classList.add("show");
+      loveBurst();
+      setTimeout(crazyLove, 2000);
+    }
 
-      animateLoveMeter();
-      updateDaysOfLove();
-      listenForMessages();
+    function typeEffect(text, targetElementId, delay = 50) {
+      const el = document.getElementById(targetElementId);
+      el.innerHTML = '';
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          el.innerHTML += text.charAt(i++);
+        } else {
+          clearInterval(interval);
+        }
+      }, delay);
+    }
 
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerText = "❤️";
-        heart.style.left = ${Math.random()*90}%;
-        heart.style.animationDelay = ${Math.random()*5}s;
-        heart.style.fontSize = ${Math.random()*20+20}px;
-        loveScreen.appendChild(heart);
+    function loveBurst() {
+      const emojis = ["💖", "💘", "💕", "💓", "💞", "💗", "💝", "💟", "😍", "😘", "🥰", "😚", "😻"];
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const row = Array.from({length: 20}, () =>
+            emojis[Math.floor(Math.random() * emojis.length)]
+          ).join('');
+          const burstLine = document.createElement("div");
+          burstLine.className = "love-text";
+          burstLine.style.fontSize = "22px";
+          burstLine.innerText = row;
+          document.getElementById("loveScreen").appendChild(burstLine);
+        }, i * 300);
       }
     }
 
-    function animateLoveMeter() {
-      const pr = document.getElementById("loveProgress");
-      let v = 0;
-      const iv = setInterval(() => {
-        if (v >= 100) clearInterval(iv);
-        else pr.value = ++v;
-      }, 20);
+    function crazyLove() {
+      const messages = [
+        "Hey You, are you a loop? Because I can't escape you! 🔁💘",
+        "If you were a bug, I wouldn't fix you. I'd keep you forever. 🐞❤️",
+        "You're the 'print' in my 'Hello World' 😘",
+        "If I had a function called 'Perfect()', it would return you! 🎯",
+        "You're like whitespace in Python — you make everything beautiful 🐍✨",
+        "I tried to raise an Exception... but you're too perfect 😳",
+        "My heart runs on your smile like code runs on indentation 🫠"
+      ];
+
+      let i = 0;
+      function nextMessage() {
+        if (i >= messages.length) {
+          heartbreak();
+          return;
+        }
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "love-msg";
+        msgDiv.id = `msg-${i}`;
+        document.getElementById("loveScreen").appendChild(msgDiv);
+        typeEffect(messages[i++], msgDiv.id, 40);
+        setTimeout(nextMessage, 2000);
+      }
+
+      nextMessage();
     }
 
-    function updateDaysOfLove(startDateStr="2022-06-15") {
-      const diff = Date.now() - new Date(startDateStr).getTime();
-      const days = Math.floor(diff / (1000*60*60*24));
-      document.getElementById("daysCounter").innerText = ❤️ ${days} Days of Love ❤️;
+    function heartbreak() {
+      const msg = document.createElement("div");
+      msg.className = "love-text";
+      msg.style.color = "#990000";
+      msg.innerText = "💔 Oops! Crush not replying...";
+      document.getElementById("loveScreen").appendChild(msg);
+
+      setTimeout(() => {
+        const recovery = document.createElement("div");
+        recovery.className = "love-text";
+        recovery.innerText = "Running recovery.py...";
+        document.getElementById("loveScreen").appendChild(recovery);
+
+        let i = 3;
+        const countdown = setInterval(() => {
+          if (i === 0) {
+            clearInterval(countdown);
+            const done = document.createElement("div");
+            done.className = "love-text";
+            done.innerText = "Recovery complete! Back to flirting mode 😎💪";
+            document.getElementById("loveScreen").appendChild(done);
+            loveBurst();
+          } else {
+            const heal = document.createElement("div");
+            heal.className = "love-text";
+            heal.innerText = `Healing in ${i--}...`;
+            document.getElementById("loveScreen").appendChild(heal);
+          }
+        }, 1000);
+      }, 2000);
     }
 
-    function updateDateTime() {
-      document.getElementById("dateTimeDisplay").innerText =
-        new Date().toLocaleString('en-IN', {
-          weekday:'long', year:'numeric', month:'long', day:'numeric',
-          hour:'2-digit', minute:'2-digit', second:'2-digit'
-        });
-    }
-
-    function createPetal() {
-      const p = document.createElement("div");
-      p.className = "petal";
-      p.innerText = "🌸";
-      p.style.left = ${Math.random()*100}vw;
-      p.style.animationDuration = ${Math.random()*5+5}s;
-      p.style.fontSize = ${Math.random()*10+14}px;
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 10000);
-    }
-
-    function sendMessage() {
-      const msgInput = document.getElementById("chatMessage");
-      const text = msgInput.value.trim();
-      if (!text) return;
-      db.ref("messages").push({
-        sender: currentUser,
-        text,
-        timestamp: Date.now()
-      });
-      msgInput.value = "";
-    }
-
-    function listenForMessages() {
-      const cb = document.getElementById("chatBox");
-      db.ref("messages").on("child_added", snap => {
-        const m = snap.val();
-        const cls = m.sender === currentUser ? "user" : "bot";
-        cb.innerHTML += <div class="${cls}">${m.sender}: ${m.text}</div>;
-        cb.scrollTop = cb.scrollHeight;
-      });
-    }
-
-    const musicBtn = document.getElementById("musicToggle");
-    const iframe = document.getElementById("bgIframe");
-    let playing = true;
-    musicBtn.addEventListener("click", () => {
-      iframe.src = playing ? "" : iframe.dataset.src;
-      musicBtn.innerText = playing ? "🔇" : "🔊";
-      playing = !playing;
-      musicBtn.classList.add("bounce");
-      setTimeout(() => musicBtn.classList.remove("bounce"), 500);
-    });
-
-    setInterval(updateDateTime, 1000);
-    setInterval(createPetal, 400);
-    updateDateTime();
     refreshCaptcha();
   </script>
 </body>
